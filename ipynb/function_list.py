@@ -12,7 +12,6 @@ from nibabel.affines import apply_affine
 import math
 import xlsxwriter as xl
 import string
-import cv2
 
 # function: normalize one vector
 def normalize(x):
@@ -472,20 +471,5 @@ def upsample_images(image,up_size = 1):
             
     new_image = interpolation(new_image).reshape(new_size[0],new_size[1],1)
     return new_image
-
-# function: make movies
-def make_movies(save_path,pngs,timeframe_rate = 6):
-    '''pngs are all file paths of pngs used to generate movie'''
-    mpr_array=[]
-    for j in pngs:
-        img = cv2.imread(j)
-        h,w,l = img.shape
-        size = (w,h)
-        mpr_array.append(img)
-
-    # save movies
-    out = cv2.VideoWriter(save_path,cv2.VideoWriter_fourcc(*'MJPG'),timeframe_rate,size)
-    for j in range(len(mpr_array)):
-        out.write(mpr_array[j])
-    out.release()
     
+
